@@ -4,11 +4,14 @@ import random
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 
+CHAR_W,CHAR_H = 100, 100
+
 TUK_ground = load_image('TUK_GROUND.png')
 character = load_image('animation_sheet.png')
 hand = load_image('hand_arrow.png')
 
 hand_x, hand_y = 0, 0
+boy_x, boy_y = 400, 400
 
 
 def handle_events():
@@ -33,12 +36,15 @@ frame = 0
 
 def print_hand():
     global hand_x,hand_y
-    hand_x = random.randint(100,1200)
-    hand_y = random.randint(100,1000)
-
+    if hand_x == boy_x and hand_y == boy_x or hand_x == 0:
+        hand_x = random.randint(100,1200)
+        hand_y = random.randint(100,1000)
     hand.draw(hand_x,hand_y)
 
-    delay(1)
+    delay(0.1)
+
+def print_boy():
+    character.clip_draw(frame*CHAR_W, 0, CHAR_W, CHAR_H,boy_x,boy_y)
 
 
 
@@ -46,7 +52,7 @@ while running:
     clear_canvas()
     #TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
     print_hand()
-
+    print_boy()
     update_canvas()
     frame = (frame + 1) % 8
     handle_events()
